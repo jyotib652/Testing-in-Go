@@ -1,0 +1,85 @@
+To know the cover percentage
+-----------------------------------
+# go test -cover .
+
+
+
+
+To know which portion of the codes are being covered:
+a) first you need to save the output of the command to a .out file.
+b) then you can view this .out file in the browser through command.
+---------------------------------------------------------------------------
+a)
+# go test -coverprofile=coverage.out
+
+b)
+# go tool cover -html=coverage.out
+
+
+
+
+We can setup a alias command to run the above mentioned two commands (a, b)
+-------------------------------------------------------------------------------
+set up a alias for the following command:
+# go test -coverprofile=coverage.out && go tool cover -html=coverage.out
+
+For example:
+if we set up a alias command 'coverage' for the command:
+# go test -coverprofile=coverage.out && go tool cover -html=coverage.out
+
+we don't need to type the whole long command but typing 'coverage' will do the same for us.
+
+
+Some Go test commands:
+------------------------------------------------------------------------------------------------
+If the Postgres db is not running then all the tests and the application would crash. So, to run the application
+or the test cases(unit test), we have to make sure that the Postgres docker container is running. Here, we're running Postgres db
+in a docker container. Use "docker compose up -d" to run the postgres db.
+
+jyoti@ShadowOFMordor:~/Development/Go/IntroductionToTestingInGo/webapp/cmd/web$ go test -v -run Test_app_Login
+jyoti@ShadowOFMordor:~/Development/Go/IntroductionToTestingInGo/webapp/cmd/web$ go test -v -run Test_application_handlers
+jyoti@ShadowOFMordor:~/Development/Go/IntroductionToTestingInGo/webapp/cmd/web$ go test .
+jyoti@ShadowOFMordor:~/Development/Go/IntroductionToTestingInGo/webapp/cmd/web$ go test -count=1 .      [ sometime the test results are cached; to force it run the test again use this command]
+
+
+
+If you want to run only a single(individual) test out of multiple tests available in your test file
+----------------------------------------------------------------------------------------------------
+suppose your go test file contains 15 test function but you want to run only one test function.
+Then use this command:
+# go test -run nameOfTheTestFunction
+
+Example:
+
+# go test -run Test_isPrime
+
+OR you may add -v flag for verbose mode,
+
+# go test -v -run Test_isPrime
+
+
+
+
+
+If you want to run only a goup of test(test suite) out of multiple tests available in your test file
+----------------------------------------------------------------------------------------------------
+in this case you need to give a common name to those test functions which you want to run together.
+
+Suppose, you want to run these two tests functions together:
+i) Test_isPrime  ii) Test_prompt
+
+To do so, you have to give a common name to these functions so that you can call the test with that 
+common name.
+
+Let's rename those two functions as: i) Test_alpha_isPrime   ii) Test_alpha_prompt
+and we can call these two test functions with this command:
+
+# go test -run Test_alpha
+
+and the above command only run those tests only.
+
+
+#### POSTGRES USER CREDENTIALS #######################
+we are using this user credentials for testing purposes:
+user/id : admin@example.com
+password: secret
